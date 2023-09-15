@@ -1,0 +1,69 @@
+.react-calendar {
+  width: 700px;
+  font-family: Arial, sans-serif;
+  padding-left: 50px;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  text-align: center;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Style the navigation buttons */
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.react-calendar__navigation button {
+  background-color: #aecbf5;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bolder;
+  color: #0024f0;
+}
+
+.react-calendar__navigation button:hover {
+  background-color: #0024f0;
+  color: #fefeff;
+}
+
+/* Style the calendar grid */
+.react-calendar__tile {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.react-calendar__tile:hover {
+  background-color: #007bff;
+}
+
+/* Style the active date tile */
+.react-calendar__tile--active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Style the today's date tile */
+.react-calendar__tile--now {
+  background-color: #797070;
+}
+
+/* Style the tile for the selected date */
+.react-calendar__tile--hasActive {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Style the tile for the weekend days */
+.react-calendar__month-view__days__day--weekend {
+  color: #ff5733;
+}

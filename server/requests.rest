@@ -1,0 +1,27 @@
+POST http://localhost:3000/mtNotes/new
+Content-Type: application/json
+
+{
+    "date": "4Aug2023",
+    "workoutPlan": "Easy 12k"
+}
+
+###
+
+GET http://localhost:3000/mtNotes
+
+###
+GET http://localhost:3000/mtNotes/2023-08-10
+
+###
+DELETE http://localhost:3000/mtNotes/delete/2023-08-10
+
+###
+PUT http://localhost:3000/mtNotes/edit/2023-08-10
+Content-Type: application/json
+
+{
+    "workoutPlan": "Easy 14k",
+    "workoutNotes": "Did ok. Bit tight left calf",
+    "nutritionNotes": "Oat meal in the morning. Mangoes did not go well with it."
+}

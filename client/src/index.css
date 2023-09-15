@@ -1,0 +1,72 @@
+.bgimg {
+  content: "";
+  background-image: url("./components/image.jpg");
+  background-size: cover;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.4;
+}
+
+body {
+  font-family: "Comic Sans MS", cursive;
+  background-color: #011624;
+  color: aliceblue;
+  height: 100%;
+}
+
+.Title {
+  margin-bottom: 0;
+}
+.Calendar {
+  width: 48%;
+  position: absolute;
+  height: 100vh;
+}
+
+.Notes {
+  width: 48%;
+  position: absolute;
+  right: 25px;
+  bottom: 0px;
+}
+
+.nutritionNotes,
+.workoutNotes,
+.workoutPlan {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  flex: 1;
+  right: 15px;
+  margin-bottom: 0px;
+  background-color: rgb(1, 44, 65);
+  border-radius: 2.5%;
+  border-color: aliceblue;
+  caret-color: white;
+  text-align: center;
+  vertical-align: middle;
+}
+
+input,
+select,
+textarea {
+  color: white;
+  font-size: large;
+  font-weight: 500;
+}
+
+.Calendar1 {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+}
+
+h1,
+h2,
+h3 {
+  color: rgb(1, 211, 248);
+}
