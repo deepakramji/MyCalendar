@@ -11,10 +11,10 @@ Content-Type: application/json
 GET http://localhost:3000/mtNotes
 
 ###
-GET http://localhost:3000/mtNotes/2023-08-10
+GET http://localhost:3000/mtNotes/2023-09-16
 
 ###
-DELETE http://localhost:3000/mtNotes/delete/2023-08-10
+DELETE http://localhost:3000/mtNotes/delete/2023-09-16
 
 ###
 PUT http://localhost:3000/mtNotes/edit/2023-08-10

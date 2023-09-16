@@ -19,19 +19,37 @@ mongoose
     console.error("Error connecting to MongoDB Atlas:", error);
   });
 
-const mtNotes = require("./models/models");
+const dayLogModel = require("./models/models");
 
 //Get all day Notes
 app.get("/mtNotes", async (req, res) => {
-  const allNotes = await mtNotes.find();
-  res.json(allNotes);
+  const allNotes = await dayLogModel.find();
+  let match = null;
+  for (let n of allNotes) {
+    if (n.userName === "ramji.hariharan@gmail.com") match = n;
+  }
+  if (match) {
+    res.json(match.content);
+  } else {
+    res.json({ message: "No data found for the specified date." });
+  }
 });
 
 //Get notes for a certain day
 app.get("/mtNotes/:date", async (req, res) => {
   try {
-    const dayLog = await mtNotes.findOne({ date: req.params.date });
-    res.json(dayLog);
+    const dayLog = await dayLogModel.findOne({
+      userName: "ramji.hariharan@gmail.com",
+    });
+    let match = null;
+    for (let c of dayLog.content) {
+      if (c.date === req.params.date) match = c;
+    }
+    if (match) {
+      res.json(match);
+    } else {
+      res.json({ message: "No data found for the specified date." });
+    }
   } catch (error) {
     res.json(error.code);
   }
@@ -40,17 +58,23 @@ app.get("/mtNotes/:date", async (req, res) => {
 // Edit a daylog
 app.put("/mtNotes/edit/:date", async (req, res) => {
   try {
-    const dayLog = await mtNotes.findOne({ date: req.params.date });
-    if (dayLog !== null) {
-      if (req.body.workoutPlan !== undefined)
-        dayLog.workoutPlan = req.body.workoutPlan;
-      if (req.body.workoutNotes !== undefined)
-        dayLog.workoutNotes = req.body.workoutNotes;
-      if (req.body.nutritionNotes !== undefined)
-        dayLog.nutritionNotes = req.body.nutritionNotes;
-      const savedDayLog = await dayLog.save();
+    const dayLog = await dayLogModel.findOne({
+      userName: "ramji.hariharan@gmail.com",
+    });
+    let match = null;
+    for (let c of dayLog.content) {
+      if (c.date === req.params.date) match = c;
     }
-    res.json(savedDayLog);
+    if (match !== null) {
+      if (req.body.workoutPlan !== undefined)
+        match.workoutPlan = req.body.workoutPlan;
+      if (req.body.workoutNotes !== undefined)
+        match.workoutNotes = req.body.workoutNotes;
+      if (req.body.nutritionNotes !== undefined)
+        match.nutritionNotes = req.body.nutritionNotes;
+      await dayLog.save();
+    }
+    res.json(match.content);
   } catch (error) {
     res.json(error.code);
   }
@@ -59,14 +83,28 @@ app.put("/mtNotes/edit/:date", async (req, res) => {
 // Post a new daylog
 app.post("/mtNotes/new", async (req, res) => {
   try {
-    const dayLog = new mtNotes({
-      date: req.body.date,
-      workoutPlan: req.body.workoutPlan,
-      workoutNotes: req.body.workoutNotes,
-      nutritionNotes: req.body.nutritionNotes,
+    const dayLog = await dayLogModel.findOne({
+      userName: "ramji.hariharan@gmail.com",
     });
-    const savedDayLog = await dayLog.save();
-    res.json(savedDayLog);
+    let match = null;
+    for (let c of dayLog.content) {
+      if (c.date === req.body.date) match = c;
+    }
+
+    if (match !== null) {
+      res.status(400).json(11000);
+      return;
+    } else {
+      const newLog = {
+        date: req.body.date,
+        workoutPlan: req.body.workoutPlan,
+        workoutNotes: req.body.workoutNotes,
+        nutritionNotes: req.body.nutritionNotes,
+      };
+      dayLog.content.push(newLog);
+      await dayLog.save();
+      res.json(newLog);
+    }
   } catch (error) {
     if (error.code === 11000 && error.keyPattern && error.keyPattern.date) {
       // Duplicate key error for 'date' field
@@ -82,7 +120,14 @@ app.post("/mtNotes/new", async (req, res) => {
 
 // Delete a day note
 app.delete("/mtNotes/delete/:date", async (req, res) => {
-  const result = await mtNotes.findOneAndDelete({ date: req.params.date });
+  const result = await dayLogModel.findOne({
+    userName: "ramji.hariharan@gmail.com",
+  });
+  result.content = result.content.filter((c) => {
+    if (c.date === req.params.date) return false;
+    return true;
+  });
+  await result.save();
   res.json(result);
 });
 

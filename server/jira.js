@@ -1,4 +1,49 @@
-const axios = require("axios");
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+
+const app = express();
+
+app.use(express.json());
+app.use(cors());
+
+const connectionString =
+  "mongodb+srv://ramji:pxoNomIPRtolqc0z@cluster0.wtk2hrc.mongodb.net/";
+
+mongoose
+  .connect(connectionString)
+  .then(() => {
+    console.log("Connected to MongoDB Atlas!");
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB Atlas:", error);
+  });
+
+const { trainingLog, dayLog } = require("./models/models");
+
+const fetchNewNotes = async () => {
+  const newNotes = await trainingLog.find();
+  newNotes.forEach(async (n) => {
+    console.log(n);
+  });
+};
+
+const updateNotes = async () => {
+  const allNotes = await trainingLog.find();
+  allNotes.forEach(async (n) => {
+    try {
+      await trainingLog.findOneAndDelete({ _id: n._id });
+      console.log("Deleted Successfully");
+    } catch (error) {
+      console.error("Error deleting log for date : ${n.date}", error);
+    }
+  });
+};
+
+updateNotes();
+//fetchNewNotes();
+
+/*const axios = require("axios");
 
 // Replace with your Jira Cloud domain and API token or password
 const jiraDomain = "https://hermanmiller.atlassian.net";
@@ -39,3 +84,4 @@ async function fetchIssues() {
 }
 
 fetchIssues();
+*/

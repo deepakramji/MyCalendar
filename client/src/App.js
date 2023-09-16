@@ -50,8 +50,6 @@ function App() {
         else if (noteSel === "nutritionNotes") retStr = data.nutritionNotes;
       }
       if (retStr === undefined) return "";
-      console.log(noteSel);
-      console.log(retStr);
       return retStr;
     } catch (error) {
       console.error(error);
