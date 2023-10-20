@@ -76,7 +76,7 @@ function App() {
         ></Notes>
         <h2>How did the workout go ?</h2>
         <Notes
-          nRows={"9"}
+          nRows={"12"}
           date={getFormattedDate()}
           clsName={"workoutNotes"}
           dataFromDb={defaultStrings.workoutNotes}
@@ -88,7 +88,7 @@ function App() {
           </h3>
         </div>
         <Notes
-          nRows={"18"}
+          nRows={"15"}
           date={getFormattedDate()}
           clsName={"nutritionNotes"}
           dataFromDb={defaultStrings.nutritionNotes}
